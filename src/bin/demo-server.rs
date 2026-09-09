@@ -286,7 +286,7 @@ async fn main() -> Result<()> {
     let keys = Keys::load_from_env()?;
 
     // Standard wallet-level keys (solana-conf-bal/v1): the auditor keypair is
-    // bound to the auditor authority wallet, not the mint.
+    // bound to the auditor authority wallet.
     let (auditor_elgamal, _auditor_aes) =
         conf_balances_examples::keys::derive_confidential_keys(&keys.auditor_authority)
             .map_err(|e| anyhow!("derive auditor ElGamal keypair: {e}"))?;
