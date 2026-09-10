@@ -43,7 +43,6 @@ solana-go) derives the same keys for the same wallet:
 use solana_sdk::signer::Signer;
 use solana_zk_sdk::encryption::{
     auth_encryption::AeKey,
-    derivation::derive_confidential_keys,
     elgamal::ElGamalKeypair,
 };
 
@@ -52,9 +51,9 @@ fn derive_encryption_keys(
     signer: &dyn Signer,
 ) -> Result<(ElGamalKeypair, AeKey), Box<dyn std::error::Error>> {
     // One signature over the constant message derives both keys, bound to
-    // the wallet alone. Requires solana-zk-sdk >= 7 (this repo pulls it in
-    // as `solana-zk-sdk-v7` next to the 6.0.1 proof stack; see src/keys.rs).
-    derive_confidential_keys(signer, b"")
+    // the wallet alone. This crate's wrapper derives with zk-sdk 7 and
+    // returns the 6.0.1 key types the proof pipeline consumes (src/keys.rs).
+    conf_balances_examples::keys::derive_confidential_keys(signer)
 }
 ```
 
